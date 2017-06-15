@@ -4,7 +4,7 @@
 #
 
 # Pull base image.
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
 MAINTAINER tom.rini@gmail.com
 LABEL Description="This image is a test to run minecraft inside a container"
@@ -15,7 +15,9 @@ COPY run.sh .
 # Install Java.
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
-RUN apt-get install -y software-properties-common openjdk-7-jre pulseaudio-utils
+RUN apt-get install -y software-properties-common openjdk-8-jre \
+	sudo \
+	pulseaudio-utils
 
 # Replace 1000 with your user / group id
 # as to run GUI apps we will need the GUIs to match
@@ -33,7 +35,7 @@ ENV HOME /home/${USER:-developer}
 
 # Some minecraft dependencies
 RUN apt-get update
-RUN apt-get install -y libxtst6 libxrender1 libxi6
+RUN apt-get install -y libxtst6 libxrender1 libxi6 x11-xserver-utils
 
 # Setup sound
 COPY pulse-client.conf /etc/pulse/client.conf
