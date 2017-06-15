@@ -1,8 +1,4 @@
 #
-# Oracle Java 7 Dockerfile
-#
-# https://github.com/dockerfile/java
-# https://github.com/dockerfile/java/tree/master/oracle-java7
 # pulseaudio information:
 # https://hub.docker.com/r/thebiggerguy/docker-pulseaudio-example/
 #
@@ -10,7 +6,7 @@
 # Pull base image.
 FROM ubuntu:14.04
 
-MAINTAINER wakaru44@gmail.com
+MAINTAINER tom.rini@gmail.com
 LABEL Description="This image is a test to run minecraft inside a container"
 
 COPY run.sh . 
