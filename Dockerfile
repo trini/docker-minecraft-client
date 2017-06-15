@@ -15,19 +15,9 @@ COPY run.sh .
 
 ###
 # Install Java.
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
-RUN apt-get install -y software-properties-common
-# Installing step by step
-RUN  echo "oracle-java7-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
-RUN  add-apt-repository -y ppa:webupd8team/java 
-RUN  apt-get update
-RUN  apt-get install -y oracle-java7-installer
-RUN  rm -rf /var/lib/apt/lists/*
-RUN  rm -rf /var/cache/oracle-jdk7-installer
-
-# Define commonly used JAVA_HOME variable
-ENV JAVA_HOME /usr/lib/jvm/java-7-oracle
-
+RUN apt-get install -y software-properties-common openjdk-7-jre
 
 # Replace 1000 with your user / group id
 # as to run GUI apps we will need the GUIs to match
