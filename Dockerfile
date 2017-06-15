@@ -3,6 +3,8 @@
 #
 # https://github.com/dockerfile/java
 # https://github.com/dockerfile/java/tree/master/oracle-java7
+# pulseaudio information:
+# https://hub.docker.com/r/thebiggerguy/docker-pulseaudio-example/
 #
 
 # Pull base image.
@@ -17,7 +19,7 @@ COPY run.sh .
 # Install Java.
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
-RUN apt-get install -y software-properties-common openjdk-7-jre
+RUN apt-get install -y software-properties-common openjdk-7-jre pulseaudio-utils
 
 # Replace 1000 with your user / group id
 # as to run GUI apps we will need the GUIs to match
@@ -28,7 +30,8 @@ RUN export uid=1000 gid=1000 && \
     echo "developer:x:${uid}:" >> /etc/group && \
     echo "developer ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/developer && \
     chmod 0440 /etc/sudoers.d/developer && \
-    chown ${uid}:${gid} -R /home/developer
+    chown ${uid}:${gid} -R /home/developer && \
+    gpasswd -a developer audio
 
 ENV HOME /home/${USER:-developer}
 
@@ -36,6 +39,8 @@ ENV HOME /home/${USER:-developer}
 RUN apt-get update
 RUN apt-get install -y libxtst6 libxrender1 libxi6
 
+# Setup sound
+COPY pulse-client.conf /etc/pulse/client.conf
 
 # get the minecraft package from somewhere
 #ADD https://s3.amazonaws.com/Minecraft.Download/launcher/Minecraft.jar ${HOME}
