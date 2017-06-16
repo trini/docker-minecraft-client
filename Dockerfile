@@ -15,9 +15,15 @@ COPY run.sh .
 # Install Java.
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
-RUN apt-get install -y software-properties-common openjdk-8-jre \
+RUN apt-get install -y software-properties-common \
 	sudo \
 	pulseaudio-utils
+
+RUN  echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
+RUN  add-apt-repository -y ppa:webupd8team/java 
+RUN  apt-get update
+RUN  apt-get install -y oracle-java8-installer
+RUN  rm -rf /var/cache/oracle-jdk8-installer
 
 # Replace 1000 with your user / group id
 # as to run GUI apps we will need the GUIs to match
@@ -34,8 +40,10 @@ RUN export uid=1000 gid=1000 && \
 ENV HOME /home/${USER:-developer}
 
 # Some minecraft dependencies
-RUN apt-get update
 RUN apt-get install -y libxtst6 libxrender1 libxi6 x11-xserver-utils
+
+# Clean up
+RUN rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
 # Setup sound
 COPY pulse-client.conf /etc/pulse/client.conf
