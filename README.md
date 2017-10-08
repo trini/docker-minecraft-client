@@ -6,7 +6,7 @@ to run a java gui app from a container
 
 - get the dockerfile and other stuff by cloning the repo
 
-        git clone https://github.com/wakaru44/docker-minecraft-client.git
+        git clone https://github.com/trini/docker-minecraft-client.git
 
 - get the Minecraft.jar from the minecraft page 
 
@@ -22,6 +22,6 @@ to run a java gui app from a container
 - run it like in `running_container.sh` says, sharing volumes and stuff
 
 
-        docker run -ti --rm -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix  -v /home/wakaru/.Xauthority:/home/developer/.Xauthority --net=host minecraft
+        docker run -ti --rm -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix  -v /home/wakaru/.Xauthority:/home/developer/.Xauthority --net=host --device /dev/dri/card0 minecraft
 
 REMEMBER: You will need the Minecraft.jar downloaded in this same folder

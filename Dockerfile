@@ -40,7 +40,15 @@ RUN export uid=1000 gid=1000 && \
 ENV HOME /home/${USER:-developer}
 
 # Some minecraft dependencies
-RUN apt-get install -y libxtst6 libxrender1 libxi6 x11-xserver-utils
+RUN apt-get install -y libxslt1.1
+RUN apt-get install -y libxtst6
+RUN apt-get install -y libxrender1
+RUN apt-get install -y libxi6
+RUN apt-get install -y x11-xserver-utils
+RUN apt-get install -y libgtk2.0-bin
+RUN apt-get install -y libgl1-mesa-glx
+RUN apt-get install -y fonts-freefont-ttf
+RUN apt-get install -y libcanberra-gtk-module
 
 # Clean up
 RUN rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
